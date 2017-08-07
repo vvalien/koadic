@@ -42,7 +42,7 @@ class Colors(object):
 
     def get_prompt(self, state, isreadline = True):
         import os
-        glyph = "#" if os.geteuid() == 0 else "$"
+        glyph = "#" # if os.geteuid() == 0 else "$"
         return "%s%s: %s%s" % (self.colorize("(", [self.GREEN], isreadline),
                                  self.colorize("koadic", [self.BOLD], isreadline),
                                  self.colorize(state, [self.CYAN], isreadline),
